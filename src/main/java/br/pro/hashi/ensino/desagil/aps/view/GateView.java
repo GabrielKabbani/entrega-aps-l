@@ -17,6 +17,7 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
 
     private final JCheckBox checkBox1;
     private final JCheckBox checkBox2;
+    private final JCheckBox checkBox3;
 
     private final Image image;
     private Color color;
@@ -30,11 +31,19 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
         this.gate = gate;
         checkBox1 = new JCheckBox("");
         checkBox2 = new JCheckBox("");
+        checkBox3 = new JCheckBox("");
+
 
         if (gate.getInputSize() == 2) {
             add(checkBox1, 30, 70, 150, 25);
             add(checkBox2, 30, 150, 150, 25);
-        } else {
+        }
+        else if (gate.getInputSize() == 3) {
+            add(checkBox1, 30, 70, 150, 25);
+            add(checkBox2, 30, 110, 150, 25);
+            add(checkBox3, 30, 150, 150, 25);
+        }
+        else {
             add(checkBox1, 30, 110, 150, 25);
         }
         ;
@@ -50,6 +59,7 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
 
         checkBox1.addActionListener(this);
         checkBox2.addActionListener(this);
+        checkBox3.addActionListener(this);
 
         addMouseListener(this);
 
@@ -59,15 +69,19 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
     private void update() {
         Boolean entrada1;
         Boolean entrada2;
+        Boolean entrada3;
 
         entrada1 = checkBox1.isSelected();
         entrada2 = checkBox2.isSelected();
+        entrada3 = checkBox3.isSelected();
 
         System.out.println(entrada1);
         System.out.println(entrada2);
+        System.out.println(entrada3);
 
         Switch switch1 = new Switch();
         Switch switch2 = new Switch();
+        Switch switch3 = new Switch();
 
         if (entrada1) {
             switch1.turnOn();
@@ -81,6 +95,15 @@ public class GateView extends FixedPanel implements ActionListener, MouseListene
             }
             ;
             this.gate.connect(1, switch2);
+
+        }
+
+        if (this.gate.getInputSize() > 2) {
+            if (entrada3) {
+                switch3.turnOn();
+            }
+            this.gate.connect(2, switch3);
+
         }
         ;
 
